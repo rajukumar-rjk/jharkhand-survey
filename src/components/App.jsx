@@ -19,7 +19,7 @@ function App() {
             path="/dashboard"
             element={<PrivateRoute Component={Dashboard} />}
           ></Route>
-          <Route path="/" element={<PrivateRoute Component={Home} />}></Route>
+          <Route path="/" element={<PrivateRoute Component={User} />}></Route>
           <Route
             path="/tracking"
             element={<PrivateRoute Component={Tracking} />}

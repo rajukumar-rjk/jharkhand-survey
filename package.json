@@ -1,7 +1,7 @@
 {
   "name": "authentication-firestore",
   "private": true,
-  "homepage": "https://rajukumar-rjk.github.io/jharkhand-survey/",
+  "homepage": "https://rajukumar-rjk.github.io-jharkhand-survey/",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
