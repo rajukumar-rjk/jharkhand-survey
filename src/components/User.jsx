@@ -38,6 +38,10 @@ export default function User() {
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
+            <th>State</th>
+            <th>District</th>
+            <th>Block</th>
+            <th>Village</th>
             <th>User</th>
             <th>Password</th>
             <th>Role</th>
@@ -47,6 +51,10 @@ export default function User() {
         <tbody>
           {users.map((u) => (
             <tr key={u.id}>
+              <td>{u.data.state}</td>
+              <td>{u.data.district}</td>
+              <td>{u.data.block}</td>
+              <td>{u.data.village}</td>
               <td>{u.data.user_id}</td>
               <td>{u.data.pass}</td>
               <td>{u.data.role}</td>
