@@ -176,6 +176,8 @@ export default function Tracking() {
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
+              <th>User</th>
+              <th>Village</th>
               <th>HH No</th>
               <th>Phone</th>
               <th>Date</th>
@@ -191,6 +193,8 @@ export default function Tracking() {
           <tbody>
             {filteredData.map((u) => (
               <tr key={u.id}>
+                <td>{u.data.user_id}</td>
+                <td>{u.data.village}</td>
                 <td>{u.data.household_no}</td>
                 <td>{u.data.mobile_no}</td>
                 <td>{u.data.date}</td>
