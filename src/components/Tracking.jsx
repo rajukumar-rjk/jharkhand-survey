@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../lib/init-firebase";
 export default function Tracking() {
   const [allHHData, setAllHHData] = useState([]);
@@ -25,7 +25,6 @@ export default function Tracking() {
 
   useEffect(() => {
     getSummary();
-    console.log(filteredData);
   }, [filteredData]);
 
   const getEnteredHH = () => {
@@ -172,17 +171,21 @@ export default function Tracking() {
       </div>
 
       <h6>List of entered data</h6>
-      <div className="d-flex justify-content-start">
+      <div
+        className="d-flex justify-content-start"
+        style={{ fontSize: "15px" }}
+      >
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
+              <th>Id</th>
               <th>User</th>
               <th>Village</th>
               <th>HH No</th>
               <th>Phone</th>
               <th>Date</th>
               <th>Respondent Name</th>
-              <th>Section 1</th>
+
               <th>Section 2</th>
               <th>Section 3</th>
               <th>Section 4</th>
@@ -193,13 +196,13 @@ export default function Tracking() {
           <tbody>
             {filteredData.map((u) => (
               <tr key={u.id}>
+                <td>{u.id}</td>
                 <td>{u.data.user_id}</td>
                 <td>{u.data.village}</td>
                 <td>{u.data.household_no}</td>
                 <td>{u.data.mobile_no}</td>
                 <td>{u.data.date}</td>
                 <td>{u.data.respondent_name}</td>
-                <td>{u.data.section1?.toString()}</td>
                 <td>{u.data.section2?.toString()}</td>
                 <td>{u.data.section3?.toString()}</td>
                 <td>{u.data.section4?.toString()}</td>

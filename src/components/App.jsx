@@ -10,6 +10,7 @@ import Home from "./Home";
 import User from "./User";
 import Questions from "./Questions";
 import Tracking from "./Tracking";
+import Download from "./Download";
 function App() {
   return (
     <>
@@ -28,10 +29,16 @@ function App() {
             path="/question"
             element={<PrivateRoute Component={Questions} />}
           ></Route>
+
           <Route
             path="/user"
             element={<PrivateRoute Component={User} />}
           ></Route>
+          <Route
+            path="/download"
+            element={<PrivateRoute Component={Download} />}
+          ></Route>
+
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
         </Routes>
