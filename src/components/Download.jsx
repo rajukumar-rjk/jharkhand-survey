@@ -93,7 +93,7 @@ export default function Download() {
         ? "section3"
         : e.target.value === "section5"
         ? "section4"
-        : "section6";
+        : "section1";
     getDocs(ref)
       .then((res) => {
         let data = res.docs.map((doc) => ({
