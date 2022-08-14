@@ -61,7 +61,11 @@ export default function Download() {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        setDocData(doc.data().data);
+        const sortedData = doc
+          .data()
+          .data.sort((a, b) => a.question_id - b.question_id);
+
+        setDocData(sortedData);
         console.log(doc.id, " => ", doc.data().data);
       });
     }
