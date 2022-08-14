@@ -17,6 +17,7 @@ export default function Download() {
   const sectionNameRef = useRef();
   const [docData, setDocData] = useState([]);
   const [downloadRowData, setDownloadRowData] = useState([]);
+  const [showButton, setShowButton] = useState(false);
   const dataToExport = [];
   const exportType = exportFromJSON.types.xls;
   useEffect(() => {
@@ -83,6 +84,7 @@ export default function Download() {
 
   const downloadData = (e) => {
     const ref = collection(db, e.target.value);
+    setShowButton(true);
     console.log(e.target.value);
     let fileName =
       e.target.value === "section2"
@@ -196,6 +198,7 @@ export default function Download() {
     }
 
     ExportToExcel(fileName);
+    setShowButton(false);
   };
   const ExportToExcel = (fileName) => {
     exportFromJSON({
@@ -214,6 +217,7 @@ export default function Download() {
             variant="outline-primary"
             value="section1"
             type="button"
+            disabled={showButton}
             onClick={downloadData}
           >
             Download Section 1
@@ -222,6 +226,7 @@ export default function Download() {
             variant="outline-primary"
             value="section2"
             type="button"
+            disabled={showButton}
             onClick={downloadData}
           >
             Download Section 2.1
@@ -230,6 +235,7 @@ export default function Download() {
             variant="outline-primary"
             value="section3"
             type="button"
+            disabled={showButton}
             onClick={downloadData}
           >
             Download Section 2.2
@@ -238,6 +244,7 @@ export default function Download() {
             variant="outline-primary"
             value="section4"
             type="button"
+            disabled={showButton}
             onClick={downloadData}
           >
             Download Section 3
@@ -246,6 +253,7 @@ export default function Download() {
             variant="outline-primary"
             value="section5"
             type="button"
+            disabled={showButton}
             onClick={downloadData}
           >
             Download Section 4
@@ -254,6 +262,7 @@ export default function Download() {
             variant="outline-primary"
             value="section6"
             type="button"
+            disabled={showButton}
             onClick={downloadData}
           >
             Download Section 5
@@ -274,10 +283,12 @@ export default function Download() {
           <Form.Group className="">
             {/* <Form.Label>Select User</Form.Label> */}
             <Form.Select ref={sectionNameRef}>
-              <option>Select Section</option>
               <option value="section1">Section1</option>
-              <option value="section2">Section2</option>
-              <option value="section3">Section3</option>
+              <option value="section2">Section2.1</option>
+              <option value="section3">Section2.2</option>
+              <option value="section4">Section3</option>
+              <option value="section5">Section4</option>
+              <option value="section6">Section5</option>
             </Form.Select>
           </Form.Group>
           <Button variant="primary" type="button" onClick={getDocumentData}>
@@ -291,13 +302,34 @@ export default function Download() {
           <code>{JSON.stringify(docData)}</code>
         </pre>
       </div> */}
-
-      {docData.map((element, index) => (
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Question Id</th>
+            <th>Question Name</th>
+            <th>Option Id</th>
+            <th>Option</th>
+            <th>Option text</th>
+          </tr>
+        </thead>
+        <tbody>
+          {docData.map((element, index) => (
+            <tr key={index}>
+              <td>{element.question_id}</td>
+              <td>{element.question_text}</td>
+              <td>{element.value_id}</td>
+              <td>{element.option_text}</td>
+              <td>{element.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      {/* {docData.map((element, index) => (
         <div key={index}>
           <h5>{element.question_text}</h5>
           <p>{element.value_id !== "" ? element.option_text : element.value}</p>
         </div>
-      ))}
+      ))} */}
     </>
   );
 }
