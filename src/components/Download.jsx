@@ -104,101 +104,101 @@ export default function Download() {
         }));
         //console.log(data);
         setDownloadRowData(data);
+
+        if (e.target.value === "section1") {
+          data.forEach((data) => {
+            if (data["data"]["data"]) {
+              data["data"]["data"].forEach((d) => {
+                let temp_ = {};
+                temp_["section"] = e.target.value;
+                temp_["id"] = data.id;
+                temp_["state"] = data["data"]["state"];
+                temp_["district"] = data["data"]["district"];
+                temp_["block"] = data["data"]["block"];
+                temp_["village"] = data["data"]["village"];
+                temp_["user_id"] = data["data"]["user_id"];
+                temp_["latitude"] = data["data"]["latitude"];
+                temp_["longitude"] = data["data"]["longitude"];
+                temp_["mobile_no"] = data["data"]["mobile_no"];
+                temp_["respondent_name"] = data["data"]["respondent_name"];
+                temp_["full_address"] = data["data"]["full_address"];
+                temp_["total_child"] = data["data"]["total_child"];
+                temp_["section2_1"] = data["data"]["section2"];
+                temp_["section2_2"] = data["data"]["section3"];
+                temp_["section3"] = data["data"]["section3"];
+                temp_["section4"] = data["data"]["section4"];
+                temp_["section5"] = data["data"]["section5"];
+                temp_["mobile_no"] = data["data"]["mobile_no"];
+
+                temp_["child_id"] = d["child_id"];
+                temp_["question_id"] = d["question_id"];
+                temp_["question"] = d["question_text"];
+                temp_["value_id"] = d["value_id"];
+                temp_["value"] = d["option_text"];
+                temp_["value_text"] = d["value"];
+
+                // if (d["options"]) {
+                //   d["options"].forEach((option) => {
+                //     temp_["option"] = option["option"];
+                //     temp_["option_id"] = option["option_id"];
+                //   });
+                // }
+
+                dataToExport.push(temp_);
+              });
+            }
+          });
+        } else {
+          data.forEach((data) => {
+            if (data["data"]["data"]) {
+              data["data"]["data"].forEach((d) => {
+                let temp_ = {};
+                temp_["section"] = e.target.value;
+                temp_["id"] = data.id;
+                temp_["hh_id"] = data["data"]["doc_id"].id;
+                temp_["state"] = data["data"]["state"];
+                temp_["district"] = data["data"]["district"];
+                temp_["block"] = data["data"]["block"];
+                temp_["village"] = data["data"]["village"];
+                temp_["user_id"] = data["data"]["user_id"];
+                temp_["date"] = data["data"]["date"];
+                temp_["household_no"] = data["data"]["household_no"];
+                temp_["mobile_no"] = data["data"]["mobile_no"];
+                temp_["respondent_name"] = data["data"]["respondent_name"];
+                // temp_["total_child"] = data["data"]["total_child"];
+                // temp_["section2_1"] = data["data"]["section2"];
+                // temp_["section2_2"] = data["data"]["section3"];
+                // temp_["section3"] = data["data"]["section3"];
+                // temp_["section4"] = data["data"]["section4"];
+                // temp_["section5"] = data["data"]["section5"];
+                // temp_["full_address"] = data["data"]["full_address"];
+
+                // temp_["child_id"] = d["child_id"];
+                // temp_["child_id"] = d["child_id"];
+                temp_["question_id"] = d["question_id"];
+                temp_["question"] = d["question_text"];
+                temp_["value_id"] = d["value_id"];
+                temp_["value"] = d["option_text"];
+                temp_["value_text"] = d["value"]?.toString();
+                // if (d["options"]) {
+                //   d["options"].forEach((option) => {
+                //     temp_["option"] = option["option"];
+                //     temp_["option_id"] = option["option_id"];
+                //   });
+                // }
+
+                dataToExport.push(temp_);
+              });
+            }
+          });
+        }
+
+        ExportToExcel(fileName);
+        setShowButton(false);
       })
       .catch((error) => {
         console.log(error);
       });
-
-    if (e.target.value === "section1") {
-      downloadRowData.forEach((data) => {
-        if (data["data"]["data"]) {
-          data["data"]["data"].forEach((d) => {
-            let temp_ = {};
-            temp_["section"] = e.target.value;
-            temp_["id"] = data.id;
-            temp_["state"] = data["data"]["state"];
-            temp_["district"] = data["data"]["district"];
-            temp_["block"] = data["data"]["block"];
-            temp_["village"] = data["data"]["village"];
-            temp_["user_id"] = data["data"]["user_id"];
-            temp_["latitude"] = data["data"]["latitude"];
-            temp_["longitude"] = data["data"]["longitude"];
-            temp_["mobile_no"] = data["data"]["mobile_no"];
-            temp_["respondent_name"] = data["data"]["respondent_name"];
-            temp_["full_address"] = data["data"]["full_address"];
-            temp_["total_child"] = data["data"]["total_child"];
-            temp_["section2_1"] = data["data"]["section2"];
-            temp_["section2_2"] = data["data"]["section3"];
-            temp_["section3"] = data["data"]["section3"];
-            temp_["section4"] = data["data"]["section4"];
-            temp_["section5"] = data["data"]["section5"];
-            temp_["mobile_no"] = data["data"]["mobile_no"];
-
-            temp_["child_id"] = d["child_id"];
-            temp_["question_id"] = d["question_id"];
-            temp_["question"] = d["question_text"];
-            temp_["value_id"] = d["value_id"];
-            temp_["value"] = d["option_text"];
-            temp_["value_text"] = d["value"];
-
-            // if (d["options"]) {
-            //   d["options"].forEach((option) => {
-            //     temp_["option"] = option["option"];
-            //     temp_["option_id"] = option["option_id"];
-            //   });
-            // }
-
-            dataToExport.push(temp_);
-          });
-        }
-      });
-    } else {
-      downloadRowData.forEach((data) => {
-        if (data["data"]["data"]) {
-          data["data"]["data"].forEach((d) => {
-            let temp_ = {};
-            temp_["section"] = e.target.value;
-            temp_["id"] = data.id;
-            temp_["hh_id"] = data["data"]["doc_id"].id;
-            temp_["state"] = data["data"]["state"];
-            temp_["district"] = data["data"]["district"];
-            temp_["block"] = data["data"]["block"];
-            temp_["village"] = data["data"]["village"];
-            temp_["user_id"] = data["data"]["user_id"];
-            temp_["date"] = data["data"]["date"];
-            temp_["household_no"] = data["data"]["household_no"];
-            temp_["mobile_no"] = data["data"]["mobile_no"];
-            temp_["respondent_name"] = data["data"]["respondent_name"];
-            // temp_["total_child"] = data["data"]["total_child"];
-            // temp_["section2_1"] = data["data"]["section2"];
-            // temp_["section2_2"] = data["data"]["section3"];
-            // temp_["section3"] = data["data"]["section3"];
-            // temp_["section4"] = data["data"]["section4"];
-            // temp_["section5"] = data["data"]["section5"];
-            // temp_["full_address"] = data["data"]["full_address"];
-
-            // temp_["child_id"] = d["child_id"];
-            // temp_["child_id"] = d["child_id"];
-            temp_["question_id"] = d["question_id"];
-            temp_["question"] = d["question_text"];
-            temp_["value_id"] = d["value_id"];
-            temp_["value"] = d["option_text"];
-            temp_["value_text"] = d["value"]?.toString();
-            // if (d["options"]) {
-            //   d["options"].forEach((option) => {
-            //     temp_["option"] = option["option"];
-            //     temp_["option_id"] = option["option_id"];
-            //   });
-            // }
-
-            dataToExport.push(temp_);
-          });
-        }
-      });
-    }
-
-    ExportToExcel(fileName);
-    setShowButton(false);
   };
   const ExportToExcel = (fileName) => {
     exportFromJSON({
