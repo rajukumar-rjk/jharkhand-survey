@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -11,11 +11,43 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_APP_ID,
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+  persistence: true,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+// enableIndexedDbPersistence(db);
+const auth = getAuth(app);
 const analytics = getAnalytics(app);
+
+// enabling cache
+// enableIndexedDbPersistence(db);
+// enableIndexedDbPersistence(db).catch((err) => {
+//   if (err.code == "failed-precondition") {
+//     // Multiple tabs open, persistence can only be enabled
+//     // in one tab at a a time.
+//     // ...
+//     console.log("error1");
+//   } else if (err.code == "unimplemented") {
+//     // The current browser does not support all of the
+//     // features required to enable persistence
+//     // ...
+//     console.log("error2");
+//   }
+// });
+
+// enablePersistence(db).catch(function (err) {
+//   if (err.code == "failed-precondition") {
+//     // Multiple tabs open, persistence can only be enabled
+//     // in one tab at a a time.
+//     // ...
+//   } else if (err.code == "unimplemented") {
+//     // The current browser does not support all of the
+//     // features required to enable persistence
+//     // ...
+//   }
+// });
+export { db, auth };

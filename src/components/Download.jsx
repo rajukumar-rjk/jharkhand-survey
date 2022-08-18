@@ -8,6 +8,8 @@ import {
   doc,
   where,
   query,
+  onSnapshot,
+  enableIndexedDbPersistence,
 } from "firebase/firestore";
 import { db } from "../lib/init-firebase";
 import { async } from "@firebase/util";
@@ -59,13 +61,14 @@ export default function Download() {
       );
 
       const querySnapshot = await getDocs(q);
-
+      console.log(querySnapshot);
       querySnapshot.forEach((doc) => {
         const sortedData = doc
           .data()
           .data.sort((a, b) => a.question_id - b.question_id);
 
         setDocData(sortedData);
+
         console.log(doc.id, " => ", doc.data().data);
       });
     }
@@ -89,7 +92,7 @@ export default function Download() {
   const downloadData = (e) => {
     const ref = collection(db, e.target.value);
     setShowButton(true);
-    console.log(e.target.value);
+
     let fileName =
       e.target.value === "section2"
         ? "section2_1"
@@ -107,7 +110,6 @@ export default function Download() {
           id: doc.id,
         }));
         //console.log(data);
-        setDownloadRowData(data);
 
         if (e.target.value === "section1") {
           data.forEach((data) => {
@@ -196,7 +198,7 @@ export default function Download() {
             }
           });
         }
-
+        setDownloadRowData(data);
         ExportToExcel(fileName);
         setShowButton(false);
       })

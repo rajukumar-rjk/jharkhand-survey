@@ -28,12 +28,15 @@ const Navbar = () => {
           <Nav.Link to="/question" as={NavLink}>
             Question
           </Nav.Link>
-          <Nav.Link to="/tracking" as={NavLink}>
+          <Nav.Link to="/tracking-v2" as={NavLink}>
             Tracking
           </Nav.Link>
           <Nav.Link to="/download" as={NavLink}>
             Download
           </Nav.Link>
+          {/* <Nav.Link to="/tracking-v2" as={NavLink}>
+            Tracking v2
+          </Nav.Link> */}
         </Nav>
         {currentUser?.email}
         <Button variant="link" onClick={handleLogOut}>

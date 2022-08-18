@@ -11,6 +11,7 @@ import User from "./User";
 import Questions from "./Questions";
 import Tracking from "./Tracking";
 import Download from "./Download";
+import TrackingV2 from "./TrackingV2";
 function App() {
   return (
     <>
@@ -38,7 +39,10 @@ function App() {
             path="/download"
             element={<PrivateRoute Component={Download} />}
           ></Route>
-
+          <Route
+            path="/tracking-v2"
+            element={<PrivateRoute Component={TrackingV2} />}
+          ></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
         </Routes>
