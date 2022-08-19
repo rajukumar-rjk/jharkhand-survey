@@ -52,19 +52,56 @@ const villageWiseDataSummary = (data) => {
 
   return result;
 };
+const getLocation = (data) => {
+  let user_list = [];
+  let district_list = [];
+  let village_list = [];
+  // getting unique values for dropdown
+  data.map((d) => {
+    user_list.push(d.data.user_id);
+    district_list.push(d.data.district);
 
+    const find_village = village_list.find(
+      ({ village }) => village === d.data.village
+    );
+
+    if (!find_village) {
+      village_list.push({
+        district: d.data.district,
+        village: d.data.village,
+      });
+    }
+  });
+  return {
+    user_list: user_list,
+    district_list: district_list,
+    village_list: village_list,
+  };
+};
 const sectionOneDataReducer = (state, action) => {
   switch (action.type) {
     case "ENTERED_HH_DATA":
-      let user_list = [];
-      let district_list = [];
-      let village_list = [];
-      // getting unique values for dropdown
-      action.payload.map((d) => {
-        user_list.push(d.data.user_id);
-        district_list.push(d.data.district);
-        village_list.push(d.data.village);
-      });
+      // let user_list = [];
+      // let district_list = [];
+      // let village_list = [];
+      // // getting unique values for dropdown
+      // action.payload.map((d) => {
+      //   user_list.push(d.data.user_id);
+      //   district_list.push(d.data.district);
+
+      //   const find_village = village_list.find(
+      //     ({ village }) => village === d.data.village
+      //   );
+
+      //   if (!find_village) {
+      //     village_list.push({
+      //       district: d.data.district,
+      //       village: d.data.village,
+      //     });
+      //   }
+      // });
+
+      const location = getLocation(action.payload);
 
       // summary
       let result = [];
@@ -102,15 +139,69 @@ const sectionOneDataReducer = (state, action) => {
       return {
         ...state,
         hhLevelData: action.payload,
-        districtList: [...new Set(district_list)],
-        userList: [...new Set(user_list)],
-        villageList: [...new Set(village_list)],
+        filteredHHLevelData: action.payload,
+        districtList: [...new Set(location["district_list"])],
+        userList: [...new Set(location["user_list"])],
+        villageList: location["village_list"],
+        filteredVillageList: location["village_list"],
         districtLevelData: formattedData,
+        filteredDistrictLevelData: formattedData,
         filteredData: action.payload,
         villageSummary: villageSummary,
       };
-    case "DATA_FOR_DISTRICT":
+    case "ON_DISTRICT_CHANGE":
+      const filteredVillage =
+        action.payload.district !== "0"
+          ? action.payload.village_data.filter(
+              ({ district }) => district === action.payload.district
+            )
+          : action.payload.village_data;
 
+      const filteredDistrictData =
+        action.payload.district !== "0"
+          ? action.payload.district_level_data.filter(
+              ({ district }) => district === action.payload.district
+            )
+          : action.payload.district_level_data;
+
+      const filteredHHData =
+        action.payload.district !== "0"
+          ? action.payload.hh_level_data.filter(
+              (d) => d.data.district === action.payload.district
+            )
+          : action.payload.hh_level_data;
+      return {
+        ...state,
+        filteredVillageList: filteredVillage,
+        filteredDistrictLevelData: filteredDistrictData,
+        filteredHHLevelData: filteredHHData,
+      };
+    case "ON_VILLAGE_CHANGE":
+      // const filteredVillage_1 =
+      //   action.payload.district !== "0"
+      //     ? action.payload.village_data.filter(
+      //         ({ village }) => village === action.payload.village
+      //       )
+      //     : action.payload.village_data;
+
+      const filteredDistrictData_1 =
+        action.payload.district !== "0"
+          ? action.payload.district_level_data.filter(
+              ({ village }) => village === action.payload.village
+            )
+          : action.payload.district_level_data;
+
+      const filteredHHData_1 =
+        action.payload.district !== "0"
+          ? action.payload.hh_level_data.filter(
+              (d) => d.data.village === action.payload.village
+            )
+          : action.payload.hh_level_data;
+      return {
+        ...state,
+        filteredDistrictLevelData: filteredDistrictData_1,
+        filteredHHLevelData: filteredHHData_1,
+      };
     default:
       return state;
   }

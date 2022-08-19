@@ -8,20 +8,46 @@ export default function TrackingV2() {
     userList: [],
     districtList: [],
     hhLevelData: [],
+    filteredHHLevelData: [],
     districtData: [],
     villageList: [],
+    filteredVillageList: [],
     districtLevelData: [],
+    filteredDistrictLevelData: [],
   });
   const [reportView, setReportView] = useState(1);
   const userRef = useRef();
   const dateRef = useRef();
   const districtRef = useRef();
+  const villageRef = useRef();
   const reportViewRef = useRef();
-
+  const loadDataOnDistrictChange = () => {
+    const selectedDistrict = districtRef.current.value;
+    dispatch({
+      type: "ON_DISTRICT_CHANGE",
+      payload: {
+        village_data: hhData.villageList,
+        district_level_data: hhData.districtLevelData,
+        hh_level_data: hhData.hhLevelData,
+        district: selectedDistrict,
+      },
+    });
+  };
+  const loadDataOnVillageChange = () => {
+    const selectedVillage = villageRef.current.value;
+    dispatch({
+      type: "ON_VILLAGE_CHANGE",
+      payload: {
+        district_level_data: hhData.districtLevelData,
+        hh_level_data: hhData.hhLevelData,
+        village: selectedVillage,
+      },
+    });
+  };
   const changeReportView = () => {
     setReportView(reportViewRef.current.value);
   };
-  const filterData = () => {};
+
   const getEnteredHH = () => {
     const hhRef = collection(db, "section1");
     getDocs(hhRef)
@@ -49,7 +75,7 @@ export default function TrackingV2() {
   useEffect(() => {
     getEnteredHH();
   }, []);
-  console.log(hhData);
+
   return (
     <>
       <div className="d-flex justify-content-end mb-3 gap-1">
@@ -65,20 +91,39 @@ export default function TrackingV2() {
         </Form.Group>
         <Form.Group className="">
           {/* <Form.Label>Select User</Form.Label> */}
-          {/* <Form.Select aria-label="Default select example" ref={districtRef}>
-            <option>All District</option>
+          <Form.Select
+            aria-label="Default select example"
+            ref={districtRef}
+            onChange={loadDataOnDistrictChange}
+          >
+            <option value="0">All District</option>
             {hhData.districtList.map((e, i) => (
               <option key={i} value={e}>
                 {e}
               </option>
             ))}
-          </Form.Select> */}
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="">
+          {/* <Form.Label>Select User</Form.Label> */}
+          <Form.Select
+            aria-label="Default select example"
+            onChange={loadDataOnVillageChange}
+            ref={villageRef}
+          >
+            <option value="0">All Village</option>
+            {hhData.filteredVillageList.map((e, i) => (
+              <option key={i} value={e["village"]}>
+                {e["village"]}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
         {/* <Form.Group className="">
           <Form.Control type="date" ref={dateRef}></Form.Control>
-        </Form.Group>
+        </Form.Group> */}
 
-        <Button variant="primary" type="button">
+        {/* <Button variant="primary" type="button">
           Filter
         </Button> */}
       </div>
@@ -106,7 +151,7 @@ export default function TrackingV2() {
               </tr>
             </thead>
             <tbody>
-              {hhData.districtLevelData.map((u) => (
+              {hhData.filteredDistrictLevelData.map((u) => (
                 <tr key={u.village}>
                   <td>{u.district}</td>
                   <td>{u.village}</td>
@@ -124,11 +169,11 @@ export default function TrackingV2() {
             <thead>
               <tr>
                 <th>Id</th>
-                <th>User</th>
+                <th>District</th>
                 <th>Village</th>
                 <th>HH No</th>
                 <th>Phone</th>
-                <th>Date</th>
+                {/* <th>Date</th> */}
                 <th>Respondent Name</th>
 
                 <th>Section 2</th>
@@ -139,14 +184,14 @@ export default function TrackingV2() {
               </tr>
             </thead>
             <tbody>
-              {hhData.filteredData.map((u) => (
+              {hhData.filteredHHLevelData.map((u) => (
                 <tr key={u.id}>
                   <td>{u.id}</td>
-                  <td>{u.data.user_id}</td>
+                  <td>{u.data.district}</td>
                   <td>{u.data.village}</td>
                   <td>{u.data.household_no}</td>
                   <td>{u.data.mobile_no}</td>
-                  <td>{u.data.date}</td>
+                  {/* <td>{u.data.date}</td> */}
                   <td>{u.data.respondent_name}</td>
                   <td>{u.data.section2?.toString()}</td>
                   <td>{u.data.section3?.toString()}</td>
