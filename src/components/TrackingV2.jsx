@@ -18,8 +18,8 @@ export default function TrackingV2() {
   const [reportView, setReportView] = useState(1);
   const userRef = useRef();
   const dateRef = useRef();
-  const districtRef = useRef();
-  const villageRef = useRef();
+  const districtRef = useRef("0");
+  const villageRef = useRef("0");
   const reportViewRef = useRef();
   const loadDataOnDistrictChange = () => {
     const selectedDistrict = districtRef.current.value;
