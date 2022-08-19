@@ -23,6 +23,9 @@ export default function TrackingV2() {
   const reportViewRef = useRef();
   const loadDataOnDistrictChange = () => {
     const selectedDistrict = districtRef.current.value;
+
+    villageRef.current.value =
+      selectedDistrict === "0" ? "0" : villageRef.current.value;
     dispatch({
       type: "ON_DISTRICT_CHANGE",
       payload: {
@@ -35,12 +38,14 @@ export default function TrackingV2() {
   };
   const loadDataOnVillageChange = () => {
     const selectedVillage = villageRef.current.value;
+    const selectedDistrict = districtRef.current.value;
     dispatch({
       type: "ON_VILLAGE_CHANGE",
       payload: {
         district_level_data: hhData.districtLevelData,
         hh_level_data: hhData.hhLevelData,
         village: selectedVillage,
+        district: selectedDistrict,
       },
     });
   };
@@ -109,6 +114,7 @@ export default function TrackingV2() {
           <Form.Select
             aria-label="Default select example"
             onChange={loadDataOnVillageChange}
+            value={villageRef.current.value}
             ref={villageRef}
           >
             <option value="0">All Village</option>

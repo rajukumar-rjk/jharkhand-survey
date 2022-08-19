@@ -9,7 +9,6 @@ import {
   where,
   query,
   onSnapshot,
-  enableIndexedDbPersistence,
 } from "firebase/firestore";
 import { db } from "../lib/init-firebase";
 import { async } from "@firebase/util";
@@ -59,6 +58,17 @@ export default function Download() {
         collection(db, selectedSection),
         where("doc_id", "==", docRef)
       );
+
+      // onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
+      //   snapshot.docChanges().forEach((change) => {
+      //     if (change.type === "added") {
+      //       console.log("New city: ", change.doc.data());
+      //     }
+
+      //     const source = snapshot.metadata.fromCache ? "local cache" : "server";
+      //     console.log("Data came from " + source);
+      //   });
+      // });
 
       const querySnapshot = await getDocs(q);
       console.log(querySnapshot);

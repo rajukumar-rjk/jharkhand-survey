@@ -185,16 +185,24 @@ const sectionOneDataReducer = (state, action) => {
       //     : action.payload.village_data;
 
       const filteredDistrictData_1 =
-        action.payload.district !== "0"
+        action.payload.village !== "0"
           ? action.payload.district_level_data.filter(
               ({ village }) => village === action.payload.village
+            )
+          : action.payload.district !== "0"
+          ? action.payload.district_level_data.filter(
+              ({ district }) => district === action.payload.district
             )
           : action.payload.district_level_data;
 
       const filteredHHData_1 =
-        action.payload.district !== "0"
+        action.payload.village !== "0"
           ? action.payload.hh_level_data.filter(
               (d) => d.data.village === action.payload.village
+            )
+          : action.payload.district !== "0"
+          ? action.payload.hh_level_data.filter(
+              (d) => d.data.district === action.payload.district
             )
           : action.payload.hh_level_data;
       return {
