@@ -25,9 +25,9 @@ const Navbar = () => {
           <Nav.Link to="/user" as={NavLink}>
             User
           </Nav.Link>
-          <Nav.Link to="/question" as={NavLink}>
+          {/* <Nav.Link to="/question" as={NavLink}>
             Question
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link to="/tracking-v2" as={NavLink}>
             Tracking
           </Nav.Link>
