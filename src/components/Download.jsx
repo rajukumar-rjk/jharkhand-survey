@@ -135,6 +135,8 @@ export default function Download() {
                 temp_["user_id"] = data["data"]["user_id"];
                 temp_["latitude"] = data["data"]["latitude"];
                 temp_["longitude"] = data["data"]["longitude"];
+                temp_["household_no"] = data["data"]["household_no"];
+                temp_["household_status"] = data["data"]["household_status"];
                 temp_["mobile_no"] = data["data"]["mobile_no"];
                 temp_["respondent_name"] = data["data"]["respondent_name"];
                 temp_["full_address"] = data["data"]["full_address"];
