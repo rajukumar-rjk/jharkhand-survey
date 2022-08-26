@@ -37,6 +37,7 @@ const villageWiseDataSummary = (data) => {
     "closed_hh",
     "no_response_hh",
     "open_hh",
+    "with_out_child_hh",
     "total_hh",
     "total_child",
   ];
@@ -115,6 +116,7 @@ const sectionOneDataReducer = (state, action) => {
             closed_hh: 0,
             no_response_hh: 0,
             open_hh: 0,
+            with_out_child_hh: 0,
           };
         }
 
@@ -127,6 +129,8 @@ const sectionOneDataReducer = (state, action) => {
           a[r["data"].village].no_response_hh += 1;
         } else if (r["data"].household_status == 3) {
           a[r["data"].village].open_hh += 1;
+        } else if (r["data"].household_status == 4) {
+          a[r["data"].village].with_out_child_hh += 1;
         }
         return a;
       }, {});

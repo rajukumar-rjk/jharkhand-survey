@@ -152,6 +152,7 @@ export default function TrackingV2() {
                 <th>Total Household</th>
                 <th>Closed</th>
                 <th>No response</th>
+                <th>No Child</th>
                 <th>Surveyed HH</th>
                 <th>Total child</th>
               </tr>
@@ -164,6 +165,7 @@ export default function TrackingV2() {
                   <td>{u.total_hh}</td>
                   <td>{u.closed_hh}</td>
                   <td>{u.no_response_hh}</td>
+                  <td>{u.with_out_child_hh}</td>
                   <td>{u.open_hh}</td>
                   <td>{u.total_child}</td>
                 </tr>
