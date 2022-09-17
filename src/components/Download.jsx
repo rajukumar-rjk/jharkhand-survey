@@ -20,7 +20,7 @@ export default function Download() {
   const [downloadRowData, setDownloadRowData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const dataToExport = [];
-  const exportType = exportFromJSON.types.xls;
+  const exportType = exportFromJSON.types.csv;
   useEffect(() => {
     // const hhDataForDoc = getDocument("section1", "1jWNh8deVa9GHOA7nL8B");
     // hhDataForDoc.then((res) => {
@@ -112,6 +112,8 @@ export default function Download() {
         ? "section3"
         : e.target.value === "section5"
         ? "section4"
+        : e.target.value === "section6"
+        ? "section5"
         : "section1";
     getDocs(ref)
       .then((res) => {
@@ -123,9 +125,10 @@ export default function Download() {
 
         if (e.target.value === "section1") {
           data.forEach((data) => {
+            let temp_ = {};
             if (data["data"]["data"]) {
+              console.log(data.id);
               data["data"]["data"].forEach((d) => {
-                let temp_ = {};
                 temp_["section"] = e.target.value;
                 temp_["id"] = data.id;
                 temp_["state"] = data["data"]["state"];
@@ -147,7 +150,6 @@ export default function Download() {
                 temp_["section4"] = data["data"]["section4"];
                 temp_["section5"] = data["data"]["section5"];
                 temp_["mobile_no"] = data["data"]["mobile_no"];
-
                 temp_["child_id"] = d["child_id"];
                 temp_["question_id"] = d["question_id"];
                 temp_["question"] = d["question_text"];
@@ -161,9 +163,31 @@ export default function Download() {
                 //     temp_["option_id"] = option["option_id"];
                 //   });
                 // }
-
-                dataToExport.push(temp_);
               });
+            } else {
+              console.log("not surveyed");
+              temp_["section"] = e.target.value;
+              temp_["id"] = data.id;
+              temp_["state"] = data["data"]["state"];
+              temp_["district"] = data["data"]["district"];
+              temp_["block"] = data["data"]["block"];
+              temp_["village"] = data["data"]["village"];
+              temp_["user_id"] = data["data"]["user_id"];
+              temp_["latitude"] = data["data"]["latitude"];
+              temp_["longitude"] = data["data"]["longitude"];
+              temp_["household_no"] = data["data"]["household_no"];
+              temp_["household_status"] = data["data"]["household_status"];
+              temp_["mobile_no"] = data["data"]["mobile_no"];
+              temp_["respondent_name"] = data["data"]["respondent_name"];
+              temp_["full_address"] = data["data"]["full_address"];
+              temp_["total_child"] = data["data"]["total_child"];
+              temp_["section2_1"] = data["data"]["section2"];
+              temp_["section2_2"] = data["data"]["section3"];
+              temp_["section3"] = data["data"]["section3"];
+              temp_["section4"] = data["data"]["section4"];
+              temp_["section5"] = data["data"]["section5"];
+              temp_["mobile_no"] = data["data"]["mobile_no"];
+              dataToExport.push(temp_);
             }
           });
         } else {
