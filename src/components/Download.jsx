@@ -125,10 +125,10 @@ export default function Download() {
 
         if (e.target.value === "section1") {
           data.forEach((data) => {
-            let temp_ = {};
             if (data["data"]["data"]) {
               console.log(data.id);
               data["data"]["data"].forEach((d) => {
+                let temp_ = {};
                 temp_["section"] = e.target.value;
                 temp_["id"] = data.id;
                 temp_["state"] = data["data"]["state"];
@@ -149,7 +149,7 @@ export default function Download() {
                 temp_["section3"] = data["data"]["section3"];
                 temp_["section4"] = data["data"]["section4"];
                 temp_["section5"] = data["data"]["section5"];
-                temp_["mobile_no"] = data["data"]["mobile_no"];
+
                 temp_["child_id"] = d["child_id"];
                 temp_["question_id"] = d["question_id"];
                 temp_["question"] = d["question_text"];
@@ -163,8 +163,10 @@ export default function Download() {
                 //     temp_["option_id"] = option["option_id"];
                 //   });
                 // }
+                dataToExport.push(temp_);
               });
             } else {
+              let temp_ = {};
               console.log("not surveyed");
               temp_["section"] = e.target.value;
               temp_["id"] = data.id;
